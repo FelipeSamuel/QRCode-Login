@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Login</title>
+
+	<link rel="stylesheet" href="css/style.css">	
+
+
+	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="extencoes/qrcode.js"></script>
+	<script type="text/javascript" src="extencoes/grid.js"></script>
+	<script type="text/javascript" src="extencoes/version.js"></script>
+	<script type="text/javascript" src="extencoes/detector.js"></script>
+	<script type="text/javascript" src="extencoes/formatinf.js"></script>
+	<script type="text/javascript" src="extencoes/errorlevel.js"></script>
+	<script type="text/javascript" src="extencoes/bitmat.js"></script>
+	<script type="text/javascript" src="extencoes/datablock.js"></script>
+	<script type="text/javascript" src="extencoes/bmparser.js"></script>
+	<script type="text/javascript" src="extencoes/datamask.js"></script>
+	<script type="text/javascript" src="extencoes/rsdecoder.js"></script>
+	<script type="text/javascript" src="extencoes/gf256poly.js"></script>
+	<script type="text/javascript" src="extencoes/gf256.js"></script>
+	<script type="text/javascript" src="extencoes/decoder.js"></script>
+	<script type="text/javascript" src="extencoes/qrcode.js"></script>
+	<script type="text/javascript" src="extencoes/findpat.js"></script>
+	<script type="text/javascript" src="extencoes/alignpat.js"></script>
+	<script type="text/javascript" src="extencoes/databr.js"></script>
+	<script type="text/javascript" src="extencoes/camcanvas.js"></script>
+	<script type="text/javascript" src="extencoes/jquery.qrcode.min.js"></script>
+	<script type="text/javascript" src="extencoes/jquery.webcamqrcode.min.js"></script>
+
+	<script>
+		$(document).ready(function() {
+			$('#qrcode').WebcamQRCode({
+					onQRCodeDecode: function( p_data ){
+
+						//converte para json
+						json = JSON.parse(p_data);
+						usuario = json.usuario;
+						senha = json.senha;
+
+						$.ajax({
+							url: "login.php",
+							type: "POST",
+							dataType: "json",
+							data: "usuario="+usuario+"&senha="+senha,
+							success: function(data)
+							{
+								alert(data.sucesso);
+							},
+							error: function(e,ex,exp)
+							{
+								alert(exp);
+							}
+						});
+
+					}
+			});
+		});
+	</script>
+
+
+</head>
+<body>
+<center>
+
+    <div id="webcam">
+        <!-- Caixa de visualização do qr -->
+        <center>
+        <div id="qrcode" style="width:300px; height: 300px;">
+
+        </div>
+        </center>
+    </div>
+</center>
+</body>
+</html>
